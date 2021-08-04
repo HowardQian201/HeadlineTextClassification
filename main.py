@@ -1,7 +1,6 @@
 from prediction import content_classification as cc
 
 
-
 def main():
     training_filename = '/Users/howardqian/Desktop/ML and CNN/corsali-machine-learning-technical-interview-main/data/news_dataset.json'
     test_filename = '/Users/howardqian/Desktop/ML and CNN/corsali-machine-learning-technical-interview-main/data/post_data.csv'
@@ -11,7 +10,10 @@ def main():
     #get test data
     test_headlines = cc.getTestData(test_filename)
 
-    #create model
+    #cc.trainingAccuracyTest(training_headlines,training_categories) #test accuracy on training dataset splitting by randomly choosing 199600 for training and remaining for testing
+
+
+    #create model for test dataset
     model = cc.createSklearnModel(training_headlines, training_categories)
     #make test data predictions using model
     predicted_categories = model.predict(test_headlines)
@@ -24,6 +26,9 @@ def main():
 
         print(predicted_categories[i], test_headlines[i])
 
+    #write the predicted categories to the csv
+    cc.writeToCSV(test_filename, predicted_categories)
+    
 
 
 if __name__ == "__main__":
